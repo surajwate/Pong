@@ -9,6 +9,13 @@ VIRTUAL_HEIGHT = 243
 function love.load() 
     -- use nearest-neighbor filtering on upscaling and downscaling to prevent blurring of text & graphics
     love.graphics.setDefaultFilter('nearest', 'nearest')
+
+    -- add new retro font
+    smallFont = love.graphics.newFont('font.ttf', 8) 
+
+    -- set new font as LOVE2D's active font
+    love.graphics.setFont(smallFont)
+    
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
         resizable = false,
