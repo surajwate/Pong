@@ -32,7 +32,7 @@ function love.load()
 
     push:setupScreen(VIRTUAL_WIDTH, VIRTUAL_HEIGHT, WINDOW_WIDTH, WINDOW_HEIGHT, {
         fullscreen = false,
-        resizable = true,
+        resizable = false,
         vsync = true
     })
 
@@ -113,10 +113,18 @@ function love.draw()
     love.graphics.setFont(smallFont)
 
     if gameState == 'start' then
-        love.graphics.printf("Hello Satart State!", 0, 20, VIRTUAL_WIDTH, 'center')
+        love.graphics.printf("Hello Start State!", 0, 20, VIRTUAL_WIDTH, 'center')
     else
         love.graphics.printf("Hello Play State!", 0, 20, VIRTUAL_WIDTH, 'center')
     end
+
+    -- draw score on the left and right center of the screen
+    -- need to switch font to draw before actually printing
+    love.graphics.setFont(scoreFont)
+    love.graphics.print(tostring(player1Score), VIRTUAL_WIDTH / 2 - 50, 
+        VIRTUAL_HEIGHT / 3)
+    love.graphics.print(tostring(player2Score), VIRTUAL_WIDTH / 2 + 30,
+        VIRTUAL_HEIGHT / 3)
 
     -- render paddle, now using their class's render method 
     player1:render()
@@ -124,5 +132,18 @@ function love.draw()
 
     ball:render()
 
+    -- new function just to demonstrate how to see FPS in LÖVE2D
+    displayFPS()
+
     push:apply('end')
+end
+
+--[[
+    Renders the current FPS.
+]]
+function displayFPS()
+    -- simple FPS display across all states
+    love.graphics.setFont(smallFont)
+    love.graphics.setColor(0, 255/255, 0, 255/255)
+    love.graphics.print('FPS: ' .. tostring(love.timer.getFPS()), 10, 10)
 end
