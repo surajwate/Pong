@@ -54,12 +54,48 @@ function love.load()
 end
 
 function love.update(dt)
+    if gameState == 'play' then
+        -- detect ball collision with paddles 
+        if ball:collides(player1) then
+            ball.dx = -ball.dx * 1.03
+            ball.x = player1.x + 5
+
+            -- keep velocity going in the same direction, but randomize it
+            if ball.dy < 0 then
+                ball.dy = -math.random(10, 150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+        if ball:collides(player2) then
+            ball.dx = -ball.dx * 1.03
+            ball.x = player2.x - 4
+
+            -- keep velocity going in the same direction, but randomize it
+            if ball.dy < 0 then
+                ball.dy = -math.random(10, 150)
+            else
+                ball.dy = math.random(10, 150)
+            end
+        end
+
+        -- detect upper and lower screen boundary collision and reverse if collided
+        if ball.y <= 0 then
+            ball.y = 0
+            ball.dy = -ball.dy
+        end
+
+        -- -4 to account for the ball's size
+        if ball.y >= VIRTUAL_HEIGHT - 4 then
+            ball.y = VIRTUAL_HEIGHT - 4
+            ball.dy = -ball.dy
+        end
+    end
+
     -- player 1 movement
     if love.keyboard.isDown('w') then
-        -- add negative paddle speed to current Y scaled by deltaTime
         player1.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('s') then
-        -- add negative paddle speed to current Y scaled by deltaTime
         player1.dy = PADDLE_SPEED
     else
         player1.dy = 0
@@ -67,10 +103,8 @@ function love.update(dt)
 
     -- player 2 movement
     if love.keyboard.isDown('up') then
-        -- add negative paddle speed to current Y scaled by deltaTime
         player2.dy = -PADDLE_SPEED
     elseif love.keyboard.isDown('down') then
-        -- add negative paddle speed to current Y scaled by deltaTime
         player2.dy = PADDLE_SPEED
     else 
         player2.dy = 0
