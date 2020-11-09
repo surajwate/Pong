@@ -4,8 +4,8 @@
 
 - [x] Draw shapes to the screen (paddles and ball)
 - [x] Control 2D position of paddles based on input
-- [ ] Collision detection between paddles and ball to deflect ball back toward opponent
-- [ ] Collision detection between ball and map boundaries to keep ball within vertical bounds and to detect score (outside horizontal bounds)
+- [x] Collision detection between paddles and ball to deflect ball back toward opponent
+- [x] Collision detection between ball and map boundaries to keep ball within vertical bounds and to detect score (outside horizontal bounds)
 - [ ] Sound effects when ball hits paddles/walls or when a point is scored for flavor
 - [ ] Scorekeeping to determine winner
 
@@ -20,3 +20,6 @@ if rect1.x is not > rect2.x + rect2.width and
         collision is true
 else
         collision is false
+
+## State Machine
+
